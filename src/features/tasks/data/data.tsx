@@ -26,29 +26,34 @@ export const labels = [
 
 export const statuses = [
   {
-    value: 'backlog',
-    label: 'Backlog',
+    value: 'deep-dive',
+    label: 'Deep Dive',
     icon: IconExclamationCircle,
+    description: 'Exploring and understanding the task requirements'
   },
   {
-    value: 'todo',
-    label: 'Todo',
-    icon: IconCircle,
-  },
-  {
-    value: 'in progress',
-    label: 'In Progress',
+    value: 'iterating',
+    label: 'Iterating',
     icon: IconStopwatch,
+    description: 'Making iterative improvements and refinements'
   },
   {
-    value: 'done',
-    label: 'Done',
+    value: 'considering',
+    label: 'Considering',
+    icon: IconCircle,
+    description: 'Evaluating feasibility and priority'
+  },
+  {
+    value: 'building',
+    label: 'Building',
     icon: IconCircleCheck,
+    description: 'Active development and implementation'
   },
   {
-    value: 'canceled',
-    label: 'Canceled',
+    value: 'closed',
+    label: 'Closed',
     icon: IconCircleX,
+    description: 'Completed with final notes and summary'
   },
 ]
 
