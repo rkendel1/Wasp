@@ -7,9 +7,11 @@ import { cn } from '../../../lib/cn'
 
 interface KanbanCardProps {
   task: Task
+  onDragStart?: (task: Task) => void
+  onDragEnd?: () => void
 }
 
-export function KanbanCard({ task }: KanbanCardProps) {
+export function KanbanCard({ task, onDragStart, onDragEnd }: KanbanCardProps) {
   const { setCurrentRow, setOpen } = useTasks()
   
   const label = labels.find((label) => label.value === task.label)
@@ -18,6 +20,16 @@ export function KanbanCard({ task }: KanbanCardProps) {
   const handleCardClick = () => {
     setCurrentRow(task)
     setOpen('detail')
+  }
+
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData('text/plain', task.id)
+    e.dataTransfer.effectAllowed = 'move'
+    onDragStart?.(task)
+  }
+
+  const handleDragEnd = () => {
+    onDragEnd?.()
   }
 
   return (
@@ -29,6 +41,9 @@ export function KanbanCard({ task }: KanbanCardProps) {
         priority?.value === 'low' && "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950"
       )}
       onClick={handleCardClick}
+      draggable
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
     >
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
