@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '../../../components/ui/badge'
 import { Checkbox } from '../../../components/ui/checkbox'
-import { labels, priorities, statuses } from '../data/data'
+import { labels, priorities, stages } from '../data/data'
 import { Task } from '../data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
@@ -59,25 +59,25 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'stage',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Status' />
+      <DataTableColumnHeader column={column} title='Stage' />
     ),
     cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue('status')
+      const stage = stages.find(
+        (stage) => stage.value === row.getValue('stage')
       )
 
-      if (!status) {
+      if (!stage) {
         return null
       }
 
       return (
-        <div className='flex w-[100px] items-center'>
-          {status.icon && (
-            <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+        <div className='flex w-[120px] items-center'>
+          {stage.icon && (
+            <stage.icon className='mr-2 h-4 w-4 text-muted-foreground' />
           )}
-          <span>{status.label}</span>
+          <span>{stage.label}</span>
         </div>
       )
     },
@@ -110,6 +110,20 @@ export const columns: ColumnDef<Task>[] = [
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: 'description',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Description' />
+    ),
+    cell: ({ row }) => {
+      const description = row.getValue('description') as string
+      return (
+        <div className='max-w-[200px] truncate'>
+          {description || 'No description'}
+        </div>
+      )
     },
   },
   {

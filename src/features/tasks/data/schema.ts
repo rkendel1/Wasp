@@ -1,13 +1,36 @@
 import { z } from 'zod'
 
-// We're keeping a simple non-relational schema here.
-// IRL, you will have a schema for your data models.
+// Updated schema for the enhanced task model
 export const taskSchema = z.object({
   id: z.string(),
   title: z.string(),
-  status: z.string(),
-  label: z.string(),
+  description: z.string().optional(),
+  stage: z.string(),
   priority: z.string(),
+  label: z.string(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  userId: z.string().optional(),
+  llmResponses: z.array(z.object({
+    id: z.string(),
+    stage: z.string(),
+    prompt: z.string(),
+    response: z.string(),
+    metadata: z.any().optional(),
+    createdAt: z.date().optional(),
+  })).optional(),
 })
 
 export type Task = z.infer<typeof taskSchema>
+
+export const llmResponseSchema = z.object({
+  id: z.string(),
+  taskId: z.string(),
+  stage: z.string(),
+  prompt: z.string(),
+  response: z.string(),
+  metadata: z.any().optional(),
+  createdAt: z.date().optional(),
+})
+
+export type LLMResponse = z.infer<typeof llmResponseSchema>

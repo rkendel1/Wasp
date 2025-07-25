@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '../../../hooks/use-toast'
 import { Button } from '../../../components/ui/button'
+import { Textarea } from '../../../components/ui/textarea'
 import {
   Form,
   FormControl,
@@ -24,6 +25,9 @@ import {
 } from '../../../components/ui/sheet'
 import { SelectDropdown } from '../../../components/select-dropdown'
 import { Task } from '../data/schema'
+import { stages } from '../data/data'
+import { createTask, updateTask } from 'wasp/client/operations'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface Props {
   open: boolean
@@ -33,7 +37,8 @@ interface Props {
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
-  status: z.string().min(1, 'Please select a status.'),
+  description: z.string().optional(),
+  stage: z.string().min(1, 'Please select a stage.'),
   label: z.string().min(1, 'Please select a label.'),
   priority: z.string().min(1, 'Please choose a priority.'),
 })
@@ -41,29 +46,48 @@ type TasksForm = z.infer<typeof formSchema>
 
 export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
   const isUpdate = !!currentRow
+  const queryClient = useQueryClient()
 
   const form = useForm<TasksForm>({
     resolver: zodResolver(formSchema),
     defaultValues: currentRow ?? {
       title: '',
-      status: '',
-      label: '',
-      priority: '',
+      description: '',
+      stage: 'deep-dive',
+      label: 'feature',
+      priority: 'medium',
     },
   })
 
-  const onSubmit = (data: TasksForm) => {
-    // do something with the form data
-    onOpenChange(false)
-    form.reset()
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  const onSubmit = async (data: TasksForm) => {
+    try {
+      if (isUpdate && currentRow) {
+        await updateTask({
+          id: currentRow.id,
+          ...data,
+        })
+        toast({
+          title: 'Task updated successfully!',
+        })
+      } else {
+        await createTask(data)
+        toast({
+          title: 'Task created successfully!',
+        })
+      }
+      
+      // Refresh the tasks list
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      
+      onOpenChange(false)
+      form.reset()
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: error.message || 'Something went wrong',
+      })
+    }
   }
 
   return (
@@ -103,28 +127,45 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
-              name='status'
+              name='description'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      {...field} 
+                      placeholder='Describe the task (optional)'
+                      rows={3}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name='stage'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Stage</FormLabel>
                   <SelectDropdown
                     defaultValue={field.value}
                     onValueChange={field.onChange}
-                    placeholder='Select dropdown'
-                    items={[
-                      { label: 'In Progress', value: 'in progress' },
-                      { label: 'Backlog', value: 'backlog' },
-                      { label: 'Todo', value: 'todo' },
-                      { label: 'Canceled', value: 'canceled' },
-                      { label: 'Done', value: 'done' },
-                    ]}
+                    placeholder='Select stage'
+                    items={stages.map(stage => ({
+                      label: stage.label,
+                      value: stage.value,
+                    }))}
                   />
                   <FormMessage />
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
               name='label'
