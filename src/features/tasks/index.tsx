@@ -14,16 +14,21 @@ import { TasksPrimaryButtons } from './components/tasks-primary-buttons'
 import TasksProvider from './context/tasks-context'
 import { getTasks } from 'wasp/client/operations'
 import { useQuery } from '@tanstack/react-query'
+import { sampleTasks } from './data/sample-tasks'
 
 type ViewMode = 'table' | 'kanban'
 
 export default function Tasks() {
   const [viewMode, setViewMode] = useState<ViewMode>('kanban')
   
-  // Use the real API query instead of static data
-  const { data: tasks = [], isLoading, error } = useQuery({
+  // Use the real API query with fallback to sample data
+  const { data: tasks = sampleTasks, isLoading, error } = useQuery({
     queryKey: ['tasks'],
     queryFn: getTasks,
+    // Use sample data if API fails
+    onError: () => {
+      console.log('Using sample data as fallback')
+    }
   })
 
   if (isLoading) {
@@ -41,28 +46,6 @@ export default function Tasks() {
             <div className="text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
               <p className="text-muted-foreground">Loading tasks...</p>
-            </div>
-          </div>
-        </Main>
-      </TasksProvider>
-    )
-  }
-
-  if (error) {
-    return (
-      <TasksProvider>
-        <Header fixed>
-          <Search />
-          <div className='ml-auto flex items-center space-x-4'>
-            <ThemeSwitch />
-            <ProfileDropdown />
-          </div>
-        </Header>
-        <Main>
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-center">
-              <p className="text-red-600 mb-2">Error loading tasks</p>
-              <p className="text-muted-foreground text-sm">{error.message}</p>
             </div>
           </div>
         </Main>
@@ -90,6 +73,11 @@ export default function Tasks() {
                 : 'Here\'s a list of your tasks for this month!'
               }
             </p>
+            {error && (
+              <p className="text-sm text-orange-600 mt-1">
+                Using sample data (API not available)
+              </p>
+            )}
           </div>
           
           <div className="flex items-center gap-2">

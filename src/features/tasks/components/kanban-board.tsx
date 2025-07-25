@@ -18,8 +18,7 @@ import { TaskCard } from './task-card'
 import { DroppableColumn } from './droppable-column'
 import { useTasks } from '../context/tasks-context'
 import { moveTaskToStage, generateLLMResponse } from 'wasp/client/operations'
-import { useQuery } from '@tanstack/react-query'
-import { getTasks } from 'wasp/client/operations'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface KanbanBoardProps {
   tasks: Task[]
@@ -28,6 +27,7 @@ interface KanbanBoardProps {
 export function KanbanBoard({ tasks }: KanbanBoardProps) {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   const { setOpen, setCurrentRow } = useTasks()
+  const queryClient = useQueryClient()
   
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -68,9 +68,11 @@ export function KanbanBoard({ tasks }: KanbanBoardProps) {
       // Generate LLM response for the new stage
       await generateLLMResponse({ taskId, stage: newStage })
       
-      // Refresh tasks (the parent component should handle this via query invalidation)
+      // Invalidate queries to refresh the UI
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
     } catch (error) {
       console.error('Error moving task:', error)
+      // Could add a toast notification here for user feedback
     }
   }
 
@@ -82,8 +84,11 @@ export function KanbanBoard({ tasks }: KanbanBoardProps) {
   const handleGenerateLLM = async (taskId: string, stage: string) => {
     try {
       await generateLLMResponse({ taskId, stage })
+      // Invalidate queries to refresh the UI with new LLM response
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
     } catch (error) {
       console.error('Error generating LLM response:', error)
+      // Could add a toast notification here for user feedback
     }
   }
 
