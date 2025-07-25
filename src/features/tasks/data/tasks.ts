@@ -6,6 +6,12 @@ export const tasks = [
     status: 'in progress',
     label: 'documentation',
     priority: 'medium',
+    description: 'Implement compression algorithm for SSD pixel optimization',
+    stage: 'deep-dive',
+    deepDiveData: {
+      exploratoryPrompts: ['How to optimize SSD pixel compression?'],
+      llmResponses: ['Consider using lossless compression algorithms...'],
+    },
   },
   {
     id: 'TASK-7878',
@@ -14,6 +20,12 @@ export const tasks = [
     status: 'backlog',
     label: 'documentation',
     priority: 'medium',
+    description: 'Calculate EXE feed for multi-byte pixel indexing',
+    stage: 'considering',
+    consideringData: {
+      feasibilityAssessment: 'Medium complexity, requires analysis of EXE feed algorithms',
+      riskFactors: ['Performance impact', 'Memory usage'],
+    },
   },
   {
     id: 'TASK-7839',
@@ -21,6 +33,20 @@ export const tasks = [
     status: 'todo',
     label: 'bug',
     priority: 'high',
+    description: 'Fix neural TCP card bypass issue',
+    stage: 'building',
+    buildingData: {
+      assignedTo: 'John Doe',
+      codeSnippets: [
+        {
+          id: 'snippet-1',
+          language: 'javascript',
+          code: 'function bypassTCP() { /* implementation */ }',
+          description: 'TCP bypass function',
+        },
+      ],
+      technicalDetails: ['Requires network layer modification'],
+    },
   },
   {
     id: 'TASK-5562',
@@ -29,6 +55,19 @@ export const tasks = [
     status: 'backlog',
     label: 'feature',
     priority: 'medium',
+    description: 'Fix SAS interface and backup PNG bandwidth',
+    stage: 'iterating',
+    iteratingData: {
+      comments: [
+        {
+          id: 'comment-1',
+          content: 'Need to investigate SAS interface failure',
+          timestamp: '2024-01-15T10:30:00Z',
+        },
+      ],
+      feedback: ['Consider alternative backup methods'],
+      improvements: ['Implement redundant backup systems'],
+    },
   },
   {
     id: 'TASK-8686',
@@ -37,6 +76,13 @@ export const tasks = [
     status: 'canceled',
     label: 'feature',
     priority: 'medium',
+    description: 'Parse wireless SSL protocol for API panel integration',
+    stage: 'closed',
+    closedData: {
+      retrospectiveNotes: 'Project cancelled due to changing requirements',
+      llmSummary: 'The wireless SSL protocol parsing was deemed unnecessary after architecture review',
+      completionDate: '2024-01-10T15:45:00Z',
+    },
   },
   {
     id: 'TASK-1280',
