@@ -28,6 +28,17 @@ app vibeCodeWasp {
   },
 }
 
+// API actions for task management and LLM interactions
+action updateTask {
+  fn: import { updateTask } from "@src/features/tasks/actions",
+  entities: []
+}
+
+action llmInteraction {
+  fn: import { llmInteraction } from "@src/features/tasks/actions",
+  entities: []
+}
+
 //#region Auth Routes
 route SignupRoute { path: "/sign-up", to: Signup }
 page Signup {

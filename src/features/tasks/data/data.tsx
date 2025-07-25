@@ -7,6 +7,11 @@ import {
   IconCircleX,
   IconExclamationCircle,
   IconStopwatch,
+  IconBrain,
+  IconRefresh,
+  IconScale,
+  IconHammer,
+  IconArchive,
 } from '@tabler/icons-react'
 
 export const labels = [
@@ -49,6 +54,44 @@ export const statuses = [
     value: 'canceled',
     label: 'Canceled',
     icon: IconCircleX,
+  },
+]
+
+export const stages = [
+  {
+    value: 'deep-dive',
+    label: 'Deep Dive',
+    description: 'Exploratory phase with LLM interactions',
+    icon: IconBrain,
+    color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+  },
+  {
+    value: 'iterating',
+    label: 'Iterating',
+    description: 'Feedback and improvement phase',
+    icon: IconRefresh,
+    color: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+  },
+  {
+    value: 'considering',
+    label: 'Considering',
+    description: 'Assessment and priority evaluation',
+    icon: IconScale,
+    color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+  },
+  {
+    value: 'building',
+    label: 'Building',
+    description: 'Development and implementation phase',
+    icon: IconHammer,
+    color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  },
+  {
+    value: 'closed',
+    label: 'Closed',
+    description: 'Completed with retrospective',
+    icon: IconArchive,
+    color: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
   },
 ]
 
