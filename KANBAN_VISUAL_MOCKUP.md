@@ -1,0 +1,151 @@
+# Kanban Board Visual Layout
+
+## Main Interface Layout
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ Header: Kanban Board                                            [Add Task] btn │
+│ Subtitle: Manage tasks through their lifecycle stages                          │
+│                                                                                 │
+│ Tabs: [Kanban] [Table]                                                         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                           KANBAN BOARD VIEW                                    │
+├─────────────┬─────────────┬─────────────┬─────────────┬─────────────────────────┤
+│ Deep Dive   │ Iterating   │ Considering │ Building    │ Closed                  │
+│ 🧠 2        │ 🔄 2        │ 👁️ 2        │ 🔨 2        │ ✅ 2                    │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────────────────┤
+│ ┌─────────┐ │ ┌─────────┐ │ ┌─────────┐ │ ┌─────────┐ │ ┌─────────┐             │
+│ │Task-DD-1│ │ │Task-IT-1│ │ │Task-CO-1│ │ │Task-BU-1│ │ │Task-CL-1│             │
+│ │Research │ │ │Design   │ │ │Real-time│ │ │User     │ │ │CI/CD    │             │
+│ │auth...  │ │ │API...   │ │ │notify...│ │ │profile..│ │ │pipeline │             │
+│ │         │ │ │         │ │ │         │ │ │         │ │ │         │             │
+│ │[Doc]    │ │ │💬 Feed- │ │ │💬 WebSoc│ │ │💬 UI/UX │ │ │💬 Tests │             │
+│ │         │ │ │  back   │ │ │🔴 HIGH  │ │ │🔴 HIGH  │ │ │🔴 HIGH  │             │
+│ │         │ │ │         │ │ │         │ │ │👤 user-1│ │ │👤 user-1│             │
+│ │         │ │ │         │ │ │         │ │ │         │ │ │📅 Dec 20│             │
+│ │📅 Dec20│ │ │📅 Dec18 │ │ │📅 Dec15 │ │ │📅 Dec10 │ │ │📅 Dec05 │             │
+│ └─────────┘ │ └─────────┘ │ └─────────┘ │ └─────────┘ │ └─────────┘             │
+│             │             │             │             │                         │
+│ ┌─────────┐ │ ┌─────────┐ │ ┌─────────┐ │ ┌─────────┐ │ ┌─────────┐             │
+│ │Task-DD-2│ │ │Task-IT-2│ │ │Task-CO-2│ │ │Task-BU-2│ │ │Task-CL-2│             │
+│ │Analyze  │ │ │Mobile   │ │ │Database │ │ │File     │ │ │Login    │             │
+│ │dashbrd..│ │ │nav...   │ │ │query... │ │ │upload...│ │ │bug fix  │             │
+│ │         │ │ │         │ │ │         │ │ │         │ │ │         │             │
+│ │[Doc]    │ │ │💬 Hamb- │ │ │💬 3 bot-│ │ │💬 Secur │ │ │💬 Mobile│             │
+│ │         │ │ │  urger  │ │ │🟡 MED   │ │ │🟡 MED   │ │ │🟡 MED   │             │
+│ │         │ │ │         │ │ │         │ │ │👤 user-2│ │ │👤 user-2│             │
+│ │         │ │ │         │ │ │         │ │ │         │ │ │📅 Dec 22│             │
+│ │📅 Dec21│ │ │📅 Dec19 │ │ │📅 Dec16 │ │ │📅 Dec12 │ │ │📅 Dec18 │             │
+│ └─────────┘ │ └─────────┘ │ └─────────┘ │ └─────────┘ │ └─────────┘             │
+│             │             │             │             │                         │
+│ [Drop zone] │ [Drop zone] │ [Drop zone] │ [Drop zone] │ [Drop zone]             │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────────────────┘
+```
+
+## Card Design Elements
+
+### Deep Dive Stage Card
+```
+┌─────────────────────────────────┐
+│ 📋 Research auth patterns   ⋮   │
+│ [Research]                      │
+├─────────────────────────────────┤
+│ Investigate modern auth...      │
+│                                 │
+│ 📅 Created Dec 20              │
+└─────────────────────────────────┘
+```
+
+### Iterating Stage Card  
+```
+┌─────────────────────────────────┐
+│ 🎨 Design API endpoints     ⋮   │
+│ [Feature]                       │
+├─────────────────────────────────┤
+│ Create RESTful API design...    │
+│                                 │
+│ 💬 Initial feedback: Consider   │
+│    GraphQL for flexibility      │
+│                                 │
+│ 📅 Created Dec 18              │
+└─────────────────────────────────┘
+```
+
+### Considering Stage Card
+```
+┌─────────────────────────────────┐
+│ ⚡ Real-time notifications  ⋮   │
+│ [Feature]                       │
+├─────────────────────────────────┤
+│ Add WebSocket-based real-time   │
+│ notifications for actions       │
+│                                 │
+│ 💬 WebSocket vs SSE comparison  │
+│    completed. WebSocket wins    │
+│                                 │
+│ 🔴 High Priority               │
+│                                 │
+│ 📅 Created Dec 15              │
+└─────────────────────────────────┘
+```
+
+### Building Stage Card
+```
+┌─────────────────────────────────┐
+│ 👤 User profile page        ⋮   │
+│ [Feature]                       │
+├─────────────────────────────────┤
+│ Create comprehensive profile    │
+│ page with avatar upload         │
+│                                 │
+│ 💬 UI/UX approved. Backend API  │
+│    endpoints ready              │
+│                                 │
+│ 🔴 High Priority               │
+│ 👤 Assigned to: User abc123     │
+│                                 │
+│ 📅 Created Dec 10              │
+└─────────────────────────────────┘
+```
+
+### Closed Stage Card
+```
+┌─────────────────────────────────┐
+│ ✅ Setup CI/CD pipeline     ⋮   │
+│ [Enhancement]                   │
+├─────────────────────────────────┤
+│ Configure automated deployment  │
+│ pipeline with testing           │
+│                                 │
+│ 💬 All tests passing. Deploy    │
+│    pipeline working smoothly    │
+│                                 │
+│ 🔴 High Priority               │
+│ 👤 Assigned to: User abc123     │
+│ 📅 Completed: Dec 20            │
+│                                 │
+│ 📅 Created Dec 05              │
+└─────────────────────────────────┘
+```
+
+## Interactive Elements
+
+- **Drag & Drop**: Cards can be dragged between columns
+- **Click to Edit**: Click on any card to open edit dialog
+- **Context Menu**: Three-dot menu for edit/delete actions
+- **Add Task Button**: Creates new task in Deep Dive stage
+- **View Toggle**: Switch between Kanban and Table views
+
+## Color Coding
+
+- 🔵 **Deep Dive**: Blue theme (bg-blue-100, border-blue-300)
+- 🟡 **Iterating**: Yellow theme (bg-yellow-100, border-yellow-300)  
+- 🟣 **Considering**: Purple theme (bg-purple-100, border-purple-300)
+- 🟠 **Building**: Orange theme (bg-orange-100, border-orange-300)
+- 🟢 **Closed**: Green theme (bg-green-100, border-green-300)
+
+## Priority Indicators
+
+- 🔴 **High**: Red arrow up icon
+- 🟡 **Medium**: Yellow arrow right icon  
+- 🟢 **Low**: Green arrow down icon

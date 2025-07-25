@@ -101,7 +101,7 @@ export function KanbanCard({ task, onEdit, onDelete }: KanbanCardProps) {
           <div className="flex items-center gap-2">
             <User className="h-3 w-3 text-muted-foreground" />
             <span className="text-xs text-muted-foreground">
-              Assigned to: {task.assignee.id}
+              Assigned to: User {task.assignee.id.substring(0, 8)}
             </span>
           </div>
         )}

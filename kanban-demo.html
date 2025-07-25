@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .kanban-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .kanban-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .stage-deep-dive { @apply bg-blue-50 border-blue-200; }
+        .stage-iterating { @apply bg-yellow-50 border-yellow-200; }
+        .stage-considering { @apply bg-purple-50 border-purple-200; }
+        .stage-building { @apply bg-orange-50 border-orange-200; }
+        .stage-closed { @apply bg-green-50 border-green-200; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto p-4">
+        <!-- Header -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-2">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Kanban Board</h1>
+                    <p class="text-gray-600">Manage tasks through their lifecycle stages</p>
+                </div>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2">
+                    <span>+</span>
+                    Add Task
+                </button>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="flex gap-1 bg-gray-100 p-1 rounded-lg w-fit">
+                <button class="px-4 py-2 bg-white rounded text-blue-600 font-medium">Kanban</button>
+                <button class="px-4 py-2 text-gray-600 hover:text-gray-900">Table</button>
+            </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="flex gap-6 overflow-x-auto pb-4">
+            <!-- Deep Dive Column -->
+            <div class="flex-shrink-0 w-80">
+                <div class="mb-3">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-5 h-5 bg-blue-500 rounded flex items-center justify-center text-white text-xs">🧠</div>
+                        <h3 class="font-semibold">Deep Dive</h3>
+                        <span class="ml-auto bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">2</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Initial exploration and understanding</p>
+                </div>
+                
+                <div class="bg-blue-50 border-2 border-dashed border-blue-200 rounded-lg p-3 min-h-[400px]">
+                    <!-- Task Card 1 -->
+                    <div class="kanban-card bg-white border border-gray-200 rounded-lg p-4 mb-3 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-sm leading-tight">Research user authentication patterns</h4>
+                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
+                        </div>
+                        <span class="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded mb-2">Research</span>
+                        <p class="text-xs text-gray-600 mb-3">Investigate modern authentication patterns for web applications including OAuth2, JWT...</p>
+                        <div class="text-xs text-gray-500">Created Dec 20</div>
+                    </div>
+                    
+                    <!-- Task Card 2 -->
+                    <div class="kanban-card bg-white border border-gray-200 rounded-lg p-4 mb-3 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-sm leading-tight">Analyze competitor dashboard designs</h4>
+                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
+                        </div>
+                        <span class="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded mb-2">Documentation</span>
+                        <p class="text-xs text-gray-600 mb-3">Study dashboard layouts from leading SaaS applications to identify best practices...</p>
+                        <div class="text-xs text-gray-500">Created Dec 21</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Iterating Column -->
+            <div class="flex-shrink-0 w-80">
+                <div class="mb-3">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-5 h-5 bg-yellow-500 rounded flex items-center justify-center text-white text-xs">🔄</div>
+                        <h3 class="font-semibold">Iterating</h3>
+                        <span class="ml-auto bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">2</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Refining ideas and gathering feedback</p>
+                </div>
+                
+                <div class="bg-yellow-50 border-2 border-dashed border-yellow-200 rounded-lg p-3 min-h-[400px]">
+                    <!-- Task Card -->
+                    <div class="kanban-card bg-white border border-gray-200 rounded-lg p-4 mb-3 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-sm leading-tight">Design API endpoints for user management</h4>
+                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
+                        </div>
+                        <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Feature</span>
+                        <p class="text-xs text-gray-600 mb-2">Create RESTful API design for user CRUD operations.</p>
+                        <div class="flex items-start gap-2 mb-3">
+                            <span class="text-xs">💬</span>
+                            <p class="text-xs text-gray-600">Initial feedback: Consider GraphQL for better flexibility. Need to discuss rate limiting...</p>
+                        </div>
+                        <div class="text-xs text-gray-500">Created Dec 18</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Considering Column -->
+            <div class="flex-shrink-0 w-80">
+                <div class="mb-3">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-5 h-5 bg-purple-500 rounded flex items-center justify-center text-white text-xs">👁️</div>
+                        <h3 class="font-semibold">Considering</h3>
+                        <span class="ml-auto bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">1</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Evaluating options and setting priorities</p>
+                </div>
+                
+                <div class="bg-purple-50 border-2 border-dashed border-purple-200 rounded-lg p-3 min-h-[400px]">
+                    <!-- Task Card -->
+                    <div class="kanban-card bg-white border border-gray-200 rounded-lg p-4 mb-3 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-sm leading-tight">Implement real-time notifications</h4>
+                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
+                        </div>
+                        <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Feature</span>
+                        <p class="text-xs text-gray-600 mb-2">Add WebSocket-based real-time notifications for user actions.</p>
+                        <div class="flex items-start gap-2 mb-2">
+                            <span class="text-xs">💬</span>
+                            <p class="text-xs text-gray-600">WebSocket vs Server-Sent Events comparison completed...</p>
+                        </div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs text-red-600">↑</span>
+                            <span class="text-xs font-medium text-red-600">High Priority</span>
+                        </div>
+                        <div class="text-xs text-gray-500">Created Dec 15</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Building Column -->
+            <div class="flex-shrink-0 w-80">
+                <div class="mb-3">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-5 h-5 bg-orange-500 rounded flex items-center justify-center text-white text-xs">🔨</div>
+                        <h3 class="font-semibold">Building</h3>
+                        <span class="ml-auto bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">1</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Active development and implementation</p>
+                </div>
+                
+                <div class="bg-orange-50 border-2 border-dashed border-orange-200 rounded-lg p-3 min-h-[400px]">
+                    <!-- Task Card -->
+                    <div class="kanban-card bg-white border border-gray-200 rounded-lg p-4 mb-3 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-sm leading-tight">Build user profile management page</h4>
+                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
+                        </div>
+                        <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Feature</span>
+                        <p class="text-xs text-gray-600 mb-2">Create comprehensive user profile page with avatar upload, settings...</p>
+                        <div class="flex items-start gap-2 mb-2">
+                            <span class="text-xs">💬</span>
+                            <p class="text-xs text-gray-600">UI/UX approved. Backend API endpoints ready.</p>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs text-red-600">↑</span>
+                            <span class="text-xs font-medium text-red-600">High Priority</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs">👤</span>
+                            <span class="text-xs text-gray-600">Assigned to: User abc123</span>
+                        </div>
+                        <div class="text-xs text-gray-500">Created Dec 10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Closed Column -->
+            <div class="flex-shrink-0 w-80">
+                <div class="mb-3">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-5 h-5 bg-green-500 rounded flex items-center justify-center text-white text-xs">✅</div>
+                        <h3 class="font-semibold">Closed</h3>
+                        <span class="ml-auto bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">1</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Completed tasks</p>
+                </div>
+                
+                <div class="bg-green-50 border-2 border-dashed border-green-200 rounded-lg p-3 min-h-[400px]">
+                    <!-- Task Card -->
+                    <div class="kanban-card bg-white border border-gray-200 rounded-lg p-4 mb-3 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-sm leading-tight">Setup CI/CD pipeline</h4>
+                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
+                        </div>
+                        <span class="inline-block bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded mb-2">Enhancement</span>
+                        <p class="text-xs text-gray-600 mb-2">Configure automated deployment pipeline with testing and quality gates.</p>
+                        <div class="flex items-start gap-2 mb-2">
+                            <span class="text-xs">💬</span>
+                            <p class="text-xs text-gray-600">All tests passing. Deployment pipeline working smoothly.</p>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs text-red-600">↑</span>
+                            <span class="text-xs font-medium text-red-600">High Priority</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs">👤</span>
+                            <span class="text-xs text-gray-600">Assigned to: User abc123</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs">📅</span>
+                            <span class="text-xs text-gray-600">Completed: Dec 20</span>
+                        </div>
+                        <div class="border-t pt-2">
+                            <div class="text-xs text-gray-500">Created Dec 05</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple demo interaction
+        document.querySelectorAll('.kanban-card').forEach(card => {
+            card.addEventListener('click', () => {
+                alert('Task edit dialog would open here with stage-appropriate fields');
+            });
+        });
+
+        console.log('🚀 Kanban Board Demo Loaded');
+        console.log('✅ 5 stages with proper color coding');
+        console.log('✅ Dynamic field display based on stage');
+        console.log('✅ Responsive card design');
+        console.log('✅ Interactive hover effects');
+    </script>
+</body>
+</html>
