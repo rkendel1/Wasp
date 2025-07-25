@@ -14,4 +14,51 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isActive  Boolean  @default(true)
+  
+  // Relations
+  assignedTasks Task[]
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Basic fields (Deep Dive stage)
+  title       String
+  description String?
+  
+  // Stage progression
+  stage       TaskStage @default(DEEP_DIVE)
+  
+  // Iterating stage fields
+  comments    String?
+  
+  // Considering stage fields  
+  priority    TaskPriority?
+  
+  // Building stage fields
+  assigneeId  String?
+  assignee    User? @relation(fields: [assigneeId], references: [id])
+  
+  // Closed stage fields
+  completedAt DateTime?
+  
+  // Additional metadata
+  label       String?
+  position    Int @default(0) // For ordering within stage
+}
+
+enum TaskStage {
+  DEEP_DIVE
+  ITERATING
+  CONSIDERING
+  BUILDING
+  CLOSED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
 }
