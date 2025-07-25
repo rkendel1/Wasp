@@ -60,7 +60,18 @@ export default function Tasks() {
                 Kanban
               </Button>
             </div>
-            {viewMode === 'table' && <TasksPrimaryButtons />}
+            {viewMode === 'table' ? (
+              <TasksPrimaryButtons />
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.location.href = '/kanban'}
+              >
+                <LayoutGrid className="h-4 w-4 mr-2" />
+                Full Kanban View
+              </Button>
+            )}
           </div>
         </div>
         

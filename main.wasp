@@ -55,6 +55,11 @@ page Tasks {
   component: import Tasks from "@src/features/tasks/index"
 }
 
+route KanbanRoute { path: "/kanban", to: Kanban }
+page Kanban {
+  component: import Kanban from "@src/features/tasks/kanban"
+}
+
 route AppsRoute { path: "/apps", to: Apps }
 page Apps {
   component: import Apps from "@src/features/apps/index"
