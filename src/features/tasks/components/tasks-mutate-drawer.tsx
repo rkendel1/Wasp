@@ -114,11 +114,11 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                     onValueChange={field.onChange}
                     placeholder='Select dropdown'
                     items={[
-                      { label: 'In Progress', value: 'in progress' },
-                      { label: 'Backlog', value: 'backlog' },
-                      { label: 'Todo', value: 'todo' },
-                      { label: 'Canceled', value: 'canceled' },
-                      { label: 'Done', value: 'done' },
+                      { label: 'Deep Dive', value: 'deep-dive' },
+                      { label: 'Iterating', value: 'iterating' },
+                      { label: 'Considering', value: 'considering' },
+                      { label: 'Building', value: 'building' },
+                      { label: 'Closed', value: 'closed' },
                     ]}
                   />
                   <FormMessage />

@@ -1,0 +1,101 @@
+// Updated Prisma schema to support Kanban tasks with LLM integration
+// This would replace the existing schema.prisma file
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isActive  Boolean  @default(true)
+  
+  // Relations
+  tasks     Task[]
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      String   // 'deep-dive', 'iterating', 'considering', 'building', 'closed'
+  label       String   // 'bug', 'feature', 'documentation'
+  priority    String   // 'low', 'medium', 'high'
+  assignedTo  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  
+  // LLM and interaction data
+  comments    TaskComment[]
+  llmData     TaskLLMData?
+}
+
+model TaskComment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  
+  // Relations
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model TaskLLMData {
+  id                    String   @id @default(uuid())
+  exploratoryPrompts    String[] // Array of LLM-generated exploratory questions
+  iterativeImprovements String[] // Array of LLM-suggested improvements
+  feasibilityAssessment String?  // LLM assessment of task feasibility
+  codeSnippets          String[] // Array of LLM-generated code examples
+  technicalDetails      String?  // LLM-generated technical specifications
+  retrospectiveNotes    String?  // User-added retrospective notes
+  llmSummary           String?  // LLM-generated task summary
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  
+  // Relations
+  taskId               String   @unique
+  task                 Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+// Additional models for enhanced functionality
+
+model TaskAssignment {
+  id        String   @id @default(uuid())
+  role      String   // 'assignee', 'reviewer', 'stakeholder'
+  createdAt DateTime @default(now())
+  
+  // Relations
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  @@unique([taskId, userId, role])
+}
+
+model TaskHistory {
+  id         String   @id @default(uuid())
+  action     String   // 'created', 'status_changed', 'assigned', 'commented', 'llm_interaction'
+  oldValue   String?
+  newValue   String?
+  metadata   Json?    // Additional context data
+  createdAt  DateTime @default(now())
+  
+  // Relations
+  taskId     String
+  task       Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+}
