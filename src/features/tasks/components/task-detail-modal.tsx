@@ -168,26 +168,26 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="max-w-xs sm:max-w-2xl lg:max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <div className="flex items-start justify-between">
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2 mb-2">
-                {StageIcon && <StageIcon className="h-5 w-5" />}
-                <DialogTitle className="text-xl">
+                {StageIcon && <StageIcon className="h-4 w-4 md:h-5 md:w-5" />}
+                <DialogTitle className="text-lg md:text-xl">
                   {isEditing ? (
                     <Input
                       value={editedTask.title}
                       onChange={(e) => setEditedTask({...editedTask, title: e.target.value})}
-                      className="text-xl font-semibold"
+                      className="text-lg md:text-xl font-semibold"
                     />
                   ) : (
-                    task.title
+                    <span className="break-words">{task.title}</span>
                   )}
                 </DialogTitle>
               </div>
-              <DialogDescription className="flex items-center space-x-2">
-                <span>{task.id}</span>
+              <DialogDescription className="flex flex-wrap items-center gap-2">
+                <span className="text-sm">{task.id}</span>
                 {stage && (
                   <Badge className={stage.color}>
                     {stage.label}
@@ -195,7 +195,7 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
                 )}
                 {PriorityIcon && (
                   <div className="flex items-center space-x-1">
-                    <PriorityIcon className={`h-4 w-4 ${
+                    <PriorityIcon className={`h-3 w-3 md:h-4 md:w-4 ${
                       task.priority === 'high' ? 'text-red-500' :
                       task.priority === 'medium' ? 'text-yellow-500' :
                       'text-green-500'
@@ -205,7 +205,7 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
                 )}
               </DialogDescription>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 ml-2">
               {isEditing ? (
                 <>
                   <Button onClick={handleSave} size="sm">
@@ -218,15 +218,15 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
               ) : (
                 <Button variant="outline" onClick={() => setIsEditing(true)} size="sm">
                   <IconEdit className="h-4 w-4 mr-1" />
-                  Edit
+                  <span className="hidden sm:inline">Edit</span>
                 </Button>
               )}
             </div>
           </div>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 pr-6">
-          <div className="space-y-6">
+        <ScrollArea className="flex-1 pr-2 md:pr-6">
+          <div className="space-y-4 md:space-y-6">
             {/* Basic Information */}
             <div>
               <Label htmlFor="description" className="text-sm font-medium">
@@ -239,9 +239,10 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
                   onChange={(e) => setEditedTask({...editedTask, description: e.target.value})}
                   placeholder="Enter task description..."
                   className="mt-1"
+                  rows={3}
                 />
               ) : (
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground break-words">
                   {task.description || 'No description provided'}
                 </p>
               )}
@@ -251,11 +252,11 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
 
             {/* Stage-specific content */}
             <Tabs defaultValue="details" className="w-full">
-              <TabsList>
-                <TabsTrigger value="details">Details</TabsTrigger>
-                <TabsTrigger value="actions">Actions</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3">
+                <TabsTrigger value="details" className="text-xs md:text-sm">Details</TabsTrigger>
+                <TabsTrigger value="actions" className="text-xs md:text-sm">Actions</TabsTrigger>
                 {task.stage === 'iterating' && (
-                  <TabsTrigger value="comments">Comments</TabsTrigger>
+                  <TabsTrigger value="comments" className="text-xs md:text-sm">Comments</TabsTrigger>
                 )}
               </TabsList>
 

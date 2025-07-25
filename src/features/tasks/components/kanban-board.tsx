@@ -24,8 +24,8 @@ export function KanbanBoard({ tasks }: KanbanBoardProps) {
   }
 
   return (
-    <div className="flex h-full overflow-x-auto">
-      <div className="flex space-x-6 p-6 min-w-max">
+    <div className="flex h-full overflow-x-auto overflow-y-hidden">
+      <div className="flex space-x-4 md:space-x-6 p-4 md:p-6 min-w-max">
         {stages.map((stage) => (
           <KanbanColumn
             key={stage.value}

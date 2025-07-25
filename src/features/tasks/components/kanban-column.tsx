@@ -19,19 +19,19 @@ export function KanbanColumn({ stage, tasks, onTaskClick }: KanbanColumnProps) {
   const StageIcon = stage.icon
 
   return (
-    <div className="w-80 flex-shrink-0">
-      <div className="mb-4">
+    <div className="w-72 md:w-80 flex-shrink-0">
+      <div className="mb-3 md:mb-4">
         <div className="flex items-center space-x-2 mb-2">
-          <StageIcon className="h-5 w-5" />
-          <h3 className="font-semibold text-lg">{stage.label}</h3>
-          <Badge variant="secondary" className="ml-auto">
+          <StageIcon className="h-4 w-4 md:h-5 md:w-5" />
+          <h3 className="font-semibold text-base md:text-lg">{stage.label}</h3>
+          <Badge variant="secondary" className="ml-auto text-xs">
             {tasks.length}
           </Badge>
         </div>
-        <p className="text-sm text-muted-foreground">{stage.description}</p>
+        <p className="text-xs md:text-sm text-muted-foreground">{stage.description}</p>
       </div>
       
-      <div className="space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto">
+      <div className="space-y-2 md:space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto">
         {tasks.map((task) => (
           <KanbanCard
             key={task.id}
@@ -42,7 +42,7 @@ export function KanbanColumn({ stage, tasks, onTaskClick }: KanbanColumnProps) {
         ))}
         
         {tasks.length === 0 && (
-          <div className="text-center text-muted-foreground py-8">
+          <div className="text-center text-muted-foreground py-6 md:py-8 text-sm">
             No tasks in this stage
           </div>
         )}
