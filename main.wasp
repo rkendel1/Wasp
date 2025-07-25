@@ -103,3 +103,35 @@ page Maintenance {
   component: import Maintenance from "@src/features/errors/maintenance-error"
 }
 //#endregion
+
+//#region Task Operations
+query getTasks {
+  fn: import { getTasks } from "@src/features/tasks/operations",
+  entities: [Task]
+}
+
+action createTask {
+  fn: import { createTask } from "@src/features/tasks/operations",
+  entities: [Task]
+}
+
+action updateTask {
+  fn: import { updateTask } from "@src/features/tasks/operations",  
+  entities: [Task]
+}
+
+action moveTaskToStage {
+  fn: import { moveTaskToStage } from "@src/features/tasks/operations",
+  entities: [Task]
+}
+
+action deleteTask {
+  fn: import { deleteTask } from "@src/features/tasks/operations",
+  entities: [Task]
+}
+
+query getUsers {
+  fn: import { getUsers } from "@src/features/users/operations",
+  entities: [User]
+}
+//#endregion

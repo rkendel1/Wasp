@@ -1,5 +1,6 @@
 import { resolveProjectPath } from 'wasp/dev';
 import tailwindCssAnimate from 'tailwindcss-animate';
+import lineClamp from '@tailwindcss/line-clamp';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 const fonts = ['inter', 'manrope', 'system'];
@@ -96,5 +97,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindCssAnimate],
+  plugins: [tailwindCssAnimate, lineClamp],
 };
