@@ -55,6 +55,42 @@ page Tasks {
   component: import Tasks from "@src/features/tasks/index"
 }
 
+// Task queries and actions
+query getTasks {
+  fn: import { getTasks } from "@src/features/tasks/api/queries",
+  entities: [Task]
+}
+
+query getTaskById {
+  fn: import { getTaskById } from "@src/features/tasks/api/queries",
+  entities: [Task]
+}
+
+action createTask {
+  fn: import { createTask } from "@src/features/tasks/api/actions",
+  entities: [Task]
+}
+
+action updateTask {
+  fn: import { updateTask } from "@src/features/tasks/api/actions",
+  entities: [Task]
+}
+
+action deleteTask {
+  fn: import { deleteTask } from "@src/features/tasks/api/actions",
+  entities: [Task]
+}
+
+action moveTaskToStage {
+  fn: import { moveTaskToStage } from "@src/features/tasks/api/actions",
+  entities: [Task]
+}
+
+action generateLLMResponse {
+  fn: import { generateLLMResponse } from "@src/features/tasks/api/actions",
+  entities: [Task, LLMResponse]
+}
+
 route AppsRoute { path: "/apps", to: Apps }
 page Apps {
   component: import Apps from "@src/features/apps/index"

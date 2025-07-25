@@ -14,4 +14,30 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isActive  Boolean  @default(true)
+  tasks     Task[]
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  stage       String   @default("deep-dive") // 'deep-dive', 'iterating', 'considering', 'building', 'closed'
+  priority    String   @default("medium") // 'low', 'medium', 'high'
+  label       String   @default("feature") // 'bug', 'feature', 'documentation'
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  llmResponses LLMResponse[]
+}
+
+model LLMResponse {
+  id        String   @id @default(uuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  stage     String   // The stage this response was generated for
+  prompt    String   // The prompt sent to LLM
+  response  String   // The LLM response
+  metadata  Json?    // Additional structured data from LLM
+  createdAt DateTime @default(now())
 }
