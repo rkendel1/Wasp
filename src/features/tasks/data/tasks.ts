@@ -1,4 +1,30 @@
-export const tasks = [
+import { Task } from './schema'
+
+export const tasks: Task[] = [
+  {
+    id: 'TASK-9999',
+    title: 'Implement user authentication with OAuth integration',
+    status: 'Suggested',
+    label: 'feature',
+    priority: 'high',
+    description: 'Add OAuth authentication support for better user experience.'
+  },
+  {
+    id: 'TASK-9998',
+    title: 'Optimize database queries for better performance',
+    status: 'Suggested',
+    label: 'bug',
+    priority: 'medium',
+    description: 'Review and optimize slow database queries identified in performance testing.'
+  },
+  {
+    id: 'TASK-9997',
+    title: 'Update API documentation with new endpoints',
+    status: 'Suggested',
+    label: 'documentation',
+    priority: 'low',
+    description: 'Document the new REST API endpoints added in the recent sprint.'
+  },
   {
     id: 'TASK-8782',
     title:
