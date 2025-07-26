@@ -36,7 +36,7 @@ export function TaskEditDialog({
 }: TaskEditDialogProps) {
   const [formData, setFormData] = useState<Omit<Task, 'id'> & { id?: string }>({
     title: '',
-    status: defaultStatus || 'Deep Dive',
+    status: defaultStatus || 'Suggested',
     label: 'feature',
     priority: 'medium',
     description: '',
@@ -48,7 +48,7 @@ export function TaskEditDialog({
     } else {
       setFormData({
         title: '',
-        status: defaultStatus || 'Deep Dive',
+        status: defaultStatus || 'Suggested',
         label: 'feature',
         priority: 'medium',
         description: '',

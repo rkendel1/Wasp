@@ -48,6 +48,7 @@ export function KanbanBoard({
 
   const getStatusColor = (status: KanbanStatus) => {
     const colors = {
+      'Suggested': 'bg-purple-50 border-purple-200',
       'Deep Dive': 'bg-blue-50 border-blue-200',
       'Iterating': 'bg-orange-50 border-orange-200',
       'Considering': 'bg-yellow-50 border-yellow-200',
@@ -59,6 +60,7 @@ export function KanbanBoard({
 
   const getStatusHeaderColor = (status: KanbanStatus) => {
     const colors = {
+      'Suggested': 'text-purple-700 bg-purple-100',
       'Deep Dive': 'text-blue-700 bg-blue-100',
       'Iterating': 'text-orange-700 bg-orange-100',
       'Considering': 'text-yellow-700 bg-yellow-100',
