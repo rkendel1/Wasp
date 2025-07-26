@@ -1,6 +1,4 @@
-import { Task } from './schema'
-
-export const tasks: Task[] = [
+export const tasks = [
   {
     id: 'TASK-9999',
     title: 'Implement user authentication with OAuth integration',
