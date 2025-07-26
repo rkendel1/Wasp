@@ -1,3 +1,5 @@
+import { useDroppable } from '@dnd-kit/core'
+import { useDraggable } from '@dnd-kit/core'
 import { Badge } from '../../../components/ui/badge'
 import { Card, CardContent, CardHeader } from '../../../components/ui/card'
 import { Task } from '../data/schema'
@@ -17,6 +19,10 @@ interface KanbanColumnProps {
 
 export function KanbanColumn({ stage, tasks, onTaskClick }: KanbanColumnProps) {
   const StageIcon = stage.icon
+  
+  const { setNodeRef, isOver } = useDroppable({
+    id: stage.value,
+  })
 
   return (
     <div className="w-72 md:w-80 flex-shrink-0">
@@ -31,7 +37,12 @@ export function KanbanColumn({ stage, tasks, onTaskClick }: KanbanColumnProps) {
         <p className="text-xs md:text-sm text-muted-foreground">{stage.description}</p>
       </div>
       
-      <div className="space-y-2 md:space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto">
+      <div 
+        ref={setNodeRef}
+        className={`space-y-2 md:space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto p-2 rounded-lg transition-colors ${
+          isOver ? 'bg-blue-50 dark:bg-blue-950/30' : ''
+        }`}
+      >
         {tasks.map((task) => (
           <KanbanCard
             key={task.id}
@@ -62,10 +73,30 @@ function KanbanCard({ task, onClick, stageColor }: KanbanCardProps) {
   const priority = priorities.find(p => p.value === task.priority)
   const PriorityIcon = priority?.icon
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging,
+  } = useDraggable({
+    id: task.id,
+  })
+
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  } : undefined
+
   return (
     <Card 
-      className="cursor-pointer hover:shadow-md transition-shadow duration-200" 
+      ref={setNodeRef}
+      style={style}
+      className={`cursor-pointer hover:shadow-md transition-shadow duration-200 ${
+        isDragging ? 'opacity-50' : ''
+      }`} 
       onClick={onClick}
+      {...listeners}
+      {...attributes}
     >
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between space-x-2">
@@ -111,6 +142,11 @@ function KanbanCard({ task, onClick, stageColor }: KanbanCardProps) {
           
           {/* Show stage-specific indicators */}
           <div className="flex space-x-1">
+            {task.stage === 'suggested' && task.suggestedData?.votes && (
+              <Badge variant="outline" className="text-xs">
+                {task.suggestedData.votes} votes
+              </Badge>
+            )}
             {task.stage === 'deep-dive' && task.deepDiveData?.exploratoryPrompts?.length && (
               <Badge variant="outline" className="text-xs">
                 {task.deepDiveData.exploratoryPrompts.length} prompts

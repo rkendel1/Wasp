@@ -12,6 +12,7 @@ import {
   IconScale,
   IconHammer,
   IconArchive,
+  IconBulb,
 } from '@tabler/icons-react'
 
 export const labels = [
@@ -58,6 +59,13 @@ export const statuses = [
 ]
 
 export const stages = [
+  {
+    value: 'suggested',
+    label: 'Suggested',
+    description: 'Initial ideas and backlog items',
+    icon: IconBulb,
+    color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+  },
   {
     value: 'deep-dive',
     label: 'Deep Dive',

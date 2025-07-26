@@ -8,8 +8,13 @@ export const taskSchema = z.object({
   label: z.string(),
   priority: z.string(),
   description: z.string().optional(),
-  stage: z.enum(['deep-dive', 'iterating', 'considering', 'building', 'closed']).optional(),
+  stage: z.enum(['suggested', 'deep-dive', 'iterating', 'considering', 'building', 'closed']).optional(),
   // Stage-specific data
+  suggestedData: z.object({
+    submittedBy: z.string().optional(),
+    initialNotes: z.string().optional(),
+    votes: z.number().optional(),
+  }).optional(),
   deepDiveData: z.object({
     exploratoryPrompts: z.array(z.string()).optional(),
     llmResponses: z.array(z.string()).optional(),

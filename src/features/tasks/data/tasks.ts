@@ -1,5 +1,47 @@
 export const tasks = [
   {
+    id: 'TASK-0001',
+    title: 'Add dark mode toggle to user interface',
+    status: 'backlog',
+    label: 'feature',
+    priority: 'medium',
+    description: 'Allow users to switch between light and dark themes',
+    stage: 'suggested' as const,
+    suggestedData: {
+      submittedBy: 'John Smith',
+      initialNotes: 'Many users have requested this feature for better accessibility and eye strain reduction',
+      votes: 12,
+    },
+  },
+  {
+    id: 'TASK-0002',
+    title: 'Implement keyboard shortcuts for common actions',
+    status: 'backlog',
+    label: 'feature',
+    priority: 'low',
+    description: 'Add keyboard shortcuts to speed up user workflow',
+    stage: 'suggested' as const,
+    suggestedData: {
+      submittedBy: 'Sarah Lee',
+      initialNotes: 'Power users would benefit from keyboard shortcuts for copy, paste, undo, redo operations',
+      votes: 8,
+    },
+  },
+  {
+    id: 'TASK-0003',
+    title: 'Add export functionality for data tables',
+    status: 'backlog',
+    label: 'feature',
+    priority: 'high',
+    description: 'Allow users to export table data as CSV, Excel, or PDF',
+    stage: 'suggested' as const,
+    suggestedData: {
+      submittedBy: 'Mike Johnson',
+      initialNotes: 'Business users need to export reports for external stakeholders',
+      votes: 15,
+    },
+  },
+  {
     id: 'TASK-8782',
     title:
       "You can't compress the program without quantifying the open-source SSD pixel!",
@@ -7,7 +49,7 @@ export const tasks = [
     label: 'documentation',
     priority: 'medium',
     description: 'Implement compression algorithm for SSD pixel optimization',
-    stage: 'deep-dive',
+    stage: 'deep-dive' as const,
     deepDiveData: {
       exploratoryPrompts: ['How to optimize SSD pixel compression?'],
       llmResponses: ['Consider using lossless compression algorithms...'],
@@ -21,7 +63,7 @@ export const tasks = [
     label: 'documentation',
     priority: 'medium',
     description: 'Calculate EXE feed for multi-byte pixel indexing',
-    stage: 'considering',
+    stage: 'considering' as const,
     consideringData: {
       feasibilityAssessment: 'Medium complexity, requires analysis of EXE feed algorithms',
       riskFactors: ['Performance impact', 'Memory usage'],
@@ -34,7 +76,7 @@ export const tasks = [
     label: 'bug',
     priority: 'high',
     description: 'Fix neural TCP card bypass issue',
-    stage: 'building',
+    stage: 'building' as const,
     buildingData: {
       assignedTo: 'John Doe',
       codeSnippets: [
@@ -56,7 +98,7 @@ export const tasks = [
     label: 'feature',
     priority: 'medium',
     description: 'Fix SAS interface and backup PNG bandwidth',
-    stage: 'iterating',
+    stage: 'iterating' as const,
     iteratingData: {
       comments: [
         {
@@ -77,7 +119,7 @@ export const tasks = [
     label: 'feature',
     priority: 'medium',
     description: 'Parse wireless SSL protocol for API panel integration',
-    stage: 'closed',
+    stage: 'closed' as const,
     closedData: {
       retrospectiveNotes: 'Project cancelled due to changing requirements',
       llmSummary: 'The wireless SSL protocol parsing was deemed unnecessary after architecture review',

@@ -307,6 +307,62 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
 
 function renderStageDetails(task: Task, editedTask: Task, setEditedTask: (task: Task) => void, isEditing: boolean) {
   switch (task.stage) {
+    case 'suggested':
+      return (
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="submittedBy" className="font-medium flex items-center space-x-2 mb-2">
+              <IconUser className="h-4 w-4" />
+              <span>Submitted By</span>
+            </Label>
+            {isEditing ? (
+              <Input
+                id="submittedBy"
+                value={editedTask.suggestedData?.submittedBy || ''}
+                onChange={(e) => setEditedTask({
+                  ...editedTask,
+                  suggestedData: { ...editedTask.suggestedData, submittedBy: e.target.value }
+                })}
+                placeholder="Enter submitter name..."
+              />
+            ) : (
+              <p className="text-sm">{task.suggestedData?.submittedBy || 'Anonymous'}</p>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="initialNotes" className="font-medium flex items-center space-x-2 mb-2">
+              <IconNotes className="h-4 w-4" />
+              <span>Initial Notes</span>
+            </Label>
+            {isEditing ? (
+              <Textarea
+                id="initialNotes"
+                value={editedTask.suggestedData?.initialNotes || ''}
+                onChange={(e) => setEditedTask({
+                  ...editedTask,
+                  suggestedData: { ...editedTask.suggestedData, initialNotes: e.target.value }
+                })}
+                placeholder="Add initial notes about this suggestion..."
+                rows={3}
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                {task.suggestedData?.initialNotes || 'No initial notes provided'}
+              </p>
+            )}
+          </div>
+          <div>
+            <h4 className="font-medium flex items-center space-x-2 mb-2">
+              <IconTarget className="h-4 w-4" />
+              <span>Community Votes</span>
+            </h4>
+            <p className="text-sm">
+              {task.suggestedData?.votes || 0} votes
+            </p>
+          </div>
+        </div>
+      )
+
     case 'deep-dive':
       return (
         <div className="space-y-4">
@@ -482,6 +538,41 @@ function renderStageActions(
   isProcessing: boolean
 ) {
   switch (task.stage) {
+    case 'suggested':
+      return (
+        <div className="space-y-4">
+          <Button 
+            onClick={() => handleLLMRequest('initial-analysis', 'Analyze suggestion and provide initial insights')}
+            disabled={isProcessing}
+            className="w-full"
+          >
+            <IconBrain className="h-4 w-4 mr-2" />
+            {isProcessing ? 'Processing...' : 'Get Initial Analysis'}
+          </Button>
+          <div>
+            <Label htmlFor="newPrompt" className="font-medium mb-2 block">
+              Add Community Feedback
+            </Label>
+            <div className="flex space-x-2">
+              <Textarea
+                id="newPrompt"
+                value={newPrompt}
+                onChange={(e) => setNewPrompt(e.target.value)}
+                placeholder="Share your thoughts on this suggestion..."
+                className="flex-1"
+              />
+              <Button 
+                onClick={() => handleLLMRequest('feedback', newPrompt)}
+                disabled={!newPrompt.trim() || isProcessing}
+              >
+                <IconMessageCircle className="h-4 w-4 mr-1" />
+                {isProcessing ? 'Adding...' : 'Add'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )
+
     case 'deep-dive':
       return (
         <div className="space-y-4">
