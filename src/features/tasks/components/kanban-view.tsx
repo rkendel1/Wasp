@@ -10,7 +10,7 @@ interface KanbanViewProps {
 
 export function KanbanView({ tasks, onTasksChange }: KanbanViewProps) {
   const [isCreating, setIsCreating] = useState(false)
-  const [createStatus, setCreateStatus] = useState<KanbanStatus>('Deep Dive')
+  const [createStatus, setCreateStatus] = useState<KanbanStatus>('Suggested')
 
   const handleTaskMove = (taskId: string, newStatus: KanbanStatus) => {
     const updatedTasks = tasks.map(task =>

@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 // Kanban board status columns
 export const kanbanStatuses = [
+  'Suggested',
   'Deep Dive',
   'Iterating', 
   'Considering',
