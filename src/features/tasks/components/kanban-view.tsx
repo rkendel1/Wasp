@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { KanbanBoard } from './kanban-board'
 import { TaskEditDialog } from './task-edit-dialog'
 import { Task, KanbanStatus } from '../data/schema'
@@ -6,11 +6,26 @@ import { Task, KanbanStatus } from '../data/schema'
 interface KanbanViewProps {
   tasks: Task[]
   onTasksChange: (tasks: Task[]) => void
+  showAddDialog?: boolean
+  onAddDialogChange?: (show: boolean) => void
 }
 
-export function KanbanView({ tasks, onTasksChange }: KanbanViewProps) {
+export function KanbanView({ 
+  tasks, 
+  onTasksChange, 
+  showAddDialog = false, 
+  onAddDialogChange 
+}: KanbanViewProps) {
   const [isCreating, setIsCreating] = useState(false)
   const [createStatus, setCreateStatus] = useState<KanbanStatus>('Suggested')
+
+  // Handle external add dialog state
+  useEffect(() => {
+    if (showAddDialog) {
+      setCreateStatus('Suggested') // Default to first column
+      setIsCreating(true)
+    }
+  }, [showAddDialog])
 
   const handleTaskMove = (taskId: string, newStatus: KanbanStatus) => {
     const updatedTasks = tasks.map(task =>
@@ -49,6 +64,18 @@ export function KanbanView({ tasks, onTasksChange }: KanbanViewProps) {
       onTasksChange([...tasks, newTask])
     }
     setIsCreating(false)
+    // Close external dialog if it was triggered from there
+    if (onAddDialogChange) {
+      onAddDialogChange(false)
+    }
+  }
+
+  const handleDialogClose = (open: boolean) => {
+    setIsCreating(open)
+    // Close external dialog if it was triggered from there
+    if (!open && onAddDialogChange) {
+      onAddDialogChange(false)
+    }
   }
 
   return (
@@ -63,7 +90,7 @@ export function KanbanView({ tasks, onTasksChange }: KanbanViewProps) {
 
       <TaskEditDialog
         open={isCreating}
-        onOpenChange={setIsCreating}
+        onOpenChange={handleDialogClose}
         onSave={handleTaskSave}
         defaultStatus={createStatus}
       />
